@@ -1,0 +1,6 @@
+# Routing configuration for logical model tiers and provider fallback chains
+#
+# This file will contain routing policies that map logical model tiers
+# (e.g., "fast", "smart", "premium") to provider fallback chains in a later phase.
+#
+# Format and structure to be defined when implementing routing logic.

@@ -1,0 +1,17 @@
+# Prometheus configuration
+# TODO: Configure scrape targets for gateway metrics endpoint when implemented
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # TODO: Add gateway metrics scrape target
+  # - job_name: 'gateway'
+  #   static_configs:
+  #     - targets: ['gateway:8000']
+  #   metrics_path: '/metrics'

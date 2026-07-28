@@ -1,0 +1,8 @@
+# Provider and model pricing configuration
+#
+# This file will contain pricing information for LLM providers and models
+# in a later phase. Format and structure to be defined when implementing
+# budget management.
+#
+# DO NOT manually add current provider pricing - this will be populated
+# through the appropriate phase implementation.
