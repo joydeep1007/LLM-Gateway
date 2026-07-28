@@ -17,6 +17,7 @@ class _StubProvider(LLMProvider):
 
     async def stream(self, request: ChatCompletionRequest) -> AsyncIterator[StreamingChunk]:
         raise NotImplementedError
+        yield  # pragma: no cover
 
     async def health_check(self) -> ProviderHealth:
         return ProviderHealth(status=HealthStatus.HEALTHY, latency_ms=1.0, error=None)

@@ -35,7 +35,7 @@ class LLMProvider(ABC):
         """Return a full completion response for the request."""
 
     @abstractmethod
-    async def stream(self, request: ChatCompletionRequest) -> AsyncIterator[StreamingChunk]:
+    def stream(self, request: ChatCompletionRequest) -> AsyncIterator[StreamingChunk]:
         """Stream completion chunks for the request."""
 
     @abstractmethod
