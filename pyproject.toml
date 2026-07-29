@@ -12,6 +12,7 @@ dependencies = [
     "asyncpg",
     "structlog",
     "opentelemetry-sdk",
+    "python-dotenv>=1.2.2",
 ]
 
 [project.optional-dependencies]
