@@ -6,3 +6,20 @@
 #
 # DO NOT manually add current provider pricing - this will be populated
 # through the appropriate phase implementation.
+# Example pricing configuration used for development and unit tests.
+# Values are illustrative only and should not be treated as current provider pricing.
+providers:
+  groq:
+    llama-3.3-70b-versatile:
+      cost_per_input_token: "0.000005"
+      cost_per_output_token: "0.000015"
+
+  gemini:
+    gemini-2.5-flash:
+      cost_per_input_token: "0.0000015"
+      cost_per_output_token: "0.0000060"
+
+  openrouter:
+    openrouter-free:
+      cost_per_input_token: "0.0000015"
+      cost_per_output_token: "0.0000060"
