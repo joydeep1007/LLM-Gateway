@@ -5,11 +5,11 @@ from gateway.domain import exceptions
 
 def test_provider_error_attributes() -> None:
     err = exceptions.ProviderError(
-    "something went wrong",
-    provider="openai",
-    model="gpt-x",
-    status_code=502,
-)
+        "something went wrong",
+        provider="openai",
+        model="gpt-x",
+        status_code=502,
+    )
     assert isinstance(err, Exception)
     assert err.message == "something went wrong"
     assert err.provider == "openai"

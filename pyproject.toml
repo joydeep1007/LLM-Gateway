@@ -13,6 +13,7 @@ dependencies = [
     "structlog",
     "opentelemetry-sdk",
     "python-dotenv>=1.2.2",
+    "pyyaml",
 ]
 
 [project.optional-dependencies]
@@ -22,6 +23,7 @@ dev = [
     "ruff",
     "mypy",
     "locust",
+    "types-PyYAML",
 ]
 
 [build-system]
@@ -45,6 +47,20 @@ warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 
+[[tool.mypy.overrides]]
+module = "asyncpg.*"
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio",
+    "ruff",
+    "mypy",
+    "locust",
+    "types-PyYAML",
+]

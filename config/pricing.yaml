@@ -11,15 +11,21 @@
 providers:
   groq:
     llama-3.3-70b-versatile:
+      quality_tier: "smart"
+      max_tokens: 8192
       cost_per_input_token: "0.000005"
       cost_per_output_token: "0.000015"
 
   gemini:
     gemini-2.5-flash:
+      quality_tier: "fast"
+      max_tokens: 8192
       cost_per_input_token: "0.0000015"
       cost_per_output_token: "0.0000060"
 
   openrouter:
     openrouter-free:
+      quality_tier: "fast"
+      max_tokens: 4096
       cost_per_input_token: "0.0000015"
       cost_per_output_token: "0.0000060"

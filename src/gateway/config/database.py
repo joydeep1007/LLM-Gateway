@@ -38,16 +38,16 @@ class DatabaseConfig:
             await self._pool.close()
             self._pool = None
 
-    async def get_connection(self) -> asyncpg.Connection:
+    async def get_connection(self) -> asyncpg.pool.PoolConnectionProxy:
         """Acquire a connection from the pool.
 
         The caller is responsible for releasing the connection (use as async context manager).
         """
         if self._pool is None:
             raise RuntimeError("DatabaseConfig.startup() has not been called")
-        return await self._pool.acquire()  # type: ignore[return-value]
+        return await self._pool.acquire()
 
-    async def release_connection(self, conn: asyncpg.Connection) -> None:
+    async def release_connection(self, conn: asyncpg.pool.PoolConnectionProxy) -> None:
         """Release a connection back to the pool."""
         if self._pool is not None:
             await self._pool.release(conn)
@@ -64,14 +64,10 @@ class DatabaseConfig:
             async with conn.transaction():
                 await conn.execute(_CREATE_MIGRATIONS_TABLE)
 
-            rows = await conn.fetch(
-                "SELECT filename FROM schema_migrations ORDER BY filename"
-            )
+            rows = await conn.fetch("SELECT filename FROM schema_migrations ORDER BY filename")
             applied: set[str] = {row["filename"] for row in rows}
 
-            migration_files = sorted(
-                f for f in _MIGRATIONS_DIR.iterdir() if f.suffix == ".sql"
-            )
+            migration_files = sorted(f for f in _MIGRATIONS_DIR.iterdir() if f.suffix == ".sql")
 
             for migration_file in migration_files:
                 if migration_file.name in applied:

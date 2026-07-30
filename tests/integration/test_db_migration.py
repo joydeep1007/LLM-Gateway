@@ -74,8 +74,13 @@ async def test_api_keys_table_columns(db: DatabaseConfig) -> None:
 
     columns = {row["column_name"]: row for row in rows}
     expected = {
-        "key_id", "team_id", "key_prefix", "hmac_digest",
-        "created_at", "expires_at", "revoked_at",
+        "key_id",
+        "team_id",
+        "key_prefix",
+        "hmac_digest",
+        "created_at",
+        "expires_at",
+        "revoked_at",
     }
     missing = expected - columns.keys()
     assert not missing, f"Missing columns in api_keys: {missing}"
@@ -111,7 +116,7 @@ async def test_api_keys_prefix_index_exists(db: DatabaseConfig) -> None:
 @pytest.mark.asyncio
 async def test_migration_idempotent(db: DatabaseConfig) -> None:
     """Running startup() a second time must not raise (migrations already applied)."""
-    await db.startup()   # second call — should be a no-op
+    await db.startup()  # second call — should be a no-op
     await db.shutdown()  # bring pool back to a clean state for the fixture teardown
     # Re-start so the fixture teardown can close properly
     await db.startup()

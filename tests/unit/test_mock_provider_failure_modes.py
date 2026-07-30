@@ -321,9 +321,7 @@ class TestNormalModeUnchanged:
 
     @pytest.mark.asyncio
     async def test_custom_response_text(self, sample_request: ChatCompletionRequest) -> None:
-        provider = MockLLMProvider(
-            mode=MockMode.NORMAL, response_text="Custom test response here"
-        )
+        provider = MockLLMProvider(mode=MockMode.NORMAL, response_text="Custom test response here")
 
         response = await provider.complete(sample_request)
         assert response.text == "Custom test response here"

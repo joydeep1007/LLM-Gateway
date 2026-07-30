@@ -4,6 +4,7 @@ This module defines provider-related exception types used by the gateway
 to classify retryable vs non-retryable failures and to carry provider
 context such as provider name, model id and HTTP status codes.
 """
+
 from __future__ import annotations
 
 
@@ -95,6 +96,4 @@ def is_retryable(exc: ProviderError) -> bool:
     - ProviderUnavailableError
     """
 
-    return isinstance(
-        exc, (ProviderTimeoutError, ProviderRateLimitError, ProviderUnavailableError)
-    )
+    return isinstance(exc, (ProviderTimeoutError, ProviderRateLimitError, ProviderUnavailableError))
