@@ -65,4 +65,5 @@ dev = [
     "mypy",
     "locust",
     "types-PyYAML",
+    "respx>=0.23.1",
 ]
