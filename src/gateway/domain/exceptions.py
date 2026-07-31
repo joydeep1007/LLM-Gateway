@@ -79,6 +79,10 @@ class ProviderAuthenticationError(ProviderError):
     """Non-retryable error indicating authentication/authorization failure."""
 
 
+class ProviderConnectionError(ProviderError):
+    """Retryable error indicating a network/connection failure reaching the provider."""
+
+
 class InvalidRequestError(ProviderError):
     """Non-retryable error indicating an invalid request to the provider."""
 
@@ -96,4 +100,4 @@ def is_retryable(exc: ProviderError) -> bool:
     - ProviderUnavailableError
     """
 
-    return isinstance(exc, (ProviderTimeoutError, ProviderRateLimitError, ProviderUnavailableError))
+    return isinstance(exc, (ProviderTimeoutError, ProviderRateLimitError, ProviderUnavailableError, ProviderConnectionError))
