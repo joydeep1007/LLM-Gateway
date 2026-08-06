@@ -8,6 +8,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from gateway.api.completions import router as completions_router
+from gateway.api.health import router as health_router
 from gateway.providers.mock import MockLLMProvider, MockMode
 from gateway.providers.registry import ProviderRegistry
 
@@ -22,4 +23,5 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
 
 app = FastAPI(title="LLM Gateway", lifespan=lifespan)
+app.include_router(health_router)
 app.include_router(completions_router)

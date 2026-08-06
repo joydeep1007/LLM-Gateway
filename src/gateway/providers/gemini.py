@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 from collections.abc import AsyncIterator
-from typing import Any, cast
+from typing import Any
 
 from google import genai
 from google.genai import errors as gemini_errors

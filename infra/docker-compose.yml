@@ -18,6 +18,18 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import sys, urllib.request;\nfor path in ('/health', '/ready'):\n    with urllib.request.urlopen(f'http://localhost:8000{path}', timeout=2) as r:\n        if r.status != 200:\n            sys.exit(1)",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
     networks:
       - gateway-network
 

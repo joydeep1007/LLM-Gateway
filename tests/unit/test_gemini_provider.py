@@ -7,6 +7,7 @@ from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+from google.genai import errors as gemini_errors
 
 from gateway.domain.exceptions import (
     InvalidRequestError,
@@ -17,7 +18,6 @@ from gateway.domain.exceptions import (
 )
 from gateway.domain.models import ChatCompletionRequest, ChatMessage
 from gateway.providers.gemini import GeminiProvider, _translate
-from google.genai import errors as gemini_errors
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -100,17 +100,15 @@ async def test_complete_returns_response() -> None:
 @pytest.mark.asyncio
 async def test_complete_raises_authentication_error() -> None:
     provider, mock_client = _gemini_provider()
-    mock_client.aio.models.generate_content = AsyncMock(
-        side_effect=Exception(401, "bad key")
-    )
+    mock_client.aio.models.generate_content = AsyncMock(side_effect=Exception(401, "bad key"))
     with patch(
-    "gateway.providers.gemini._translate",
-    return_value=ProviderAuthenticationError(
-        "bad key",
-        provider="gemini",
-        model="gemini-2.5-flash",
-        status_code=401,
-    ),
+        "gateway.providers.gemini._translate",
+        return_value=ProviderAuthenticationError(
+            "bad key",
+            provider="gemini",
+            model="gemini-2.5-flash",
+            status_code=401,
+        ),
     ):
         with pytest.raises(ProviderAuthenticationError):
             await provider.complete(REQUEST)
@@ -119,9 +117,7 @@ async def test_complete_raises_authentication_error() -> None:
 @pytest.mark.asyncio
 async def test_complete_raises_rate_limit_error() -> None:
     provider, mock_client = _gemini_provider()
-    mock_client.aio.models.generate_content = AsyncMock(
-        side_effect=Exception(429, "rate limited")
-    )
+    mock_client.aio.models.generate_content = AsyncMock(side_effect=Exception(429, "rate limited"))
     with patch(
         "gateway.providers.gemini._translate",
         return_value=ProviderRateLimitError(
@@ -138,9 +134,7 @@ async def test_complete_raises_rate_limit_error() -> None:
 @pytest.mark.asyncio
 async def test_complete_raises_connection_error() -> None:
     provider, mock_client = _gemini_provider()
-    mock_client.aio.models.generate_content = AsyncMock(
-        side_effect=OSError("connection refused")
-    )
+    mock_client.aio.models.generate_content = AsyncMock(side_effect=OSError("connection refused"))
 
     with pytest.raises(ProviderConnectionError):
         await provider.complete(REQUEST)
@@ -170,10 +164,8 @@ async def test_complete_raises_unavailable_on_5xx() -> None:
 @pytest.mark.asyncio
 async def test_complete_raises_invalid_request_on_4xx() -> None:
     provider, mock_client = _gemini_provider()
-    mock_client.aio.models.generate_content = AsyncMock(
-        side_effect=Exception(400, "bad request")
-    )
-    
+    mock_client.aio.models.generate_content = AsyncMock(side_effect=Exception(400, "bad request"))
+
     with patch(
         "gateway.providers.gemini._translate",
         return_value=InvalidRequestError(
@@ -321,9 +313,7 @@ async def test_health_check_healthy() -> None:
 @pytest.mark.asyncio
 async def test_health_check_down_on_auth_error() -> None:
     provider, mock_client = _gemini_provider()
-    mock_client.aio.models.get = AsyncMock(
-        side_effect=_client_error(401, "bad key")
-    )
+    mock_client.aio.models.get = AsyncMock(side_effect=_client_error(401, "bad key"))
 
     health = await provider.health_check()
 
@@ -336,9 +326,7 @@ async def test_health_check_down_on_auth_error() -> None:
 @pytest.mark.asyncio
 async def test_health_check_down_on_server_error() -> None:
     provider, mock_client = _gemini_provider()
-    mock_client.aio.models.get = AsyncMock(
-        side_effect=_server_error(503, "service unavailable")
-    )
+    mock_client.aio.models.get = AsyncMock(side_effect=_server_error(503, "service unavailable"))
 
     health = await provider.health_check()
 

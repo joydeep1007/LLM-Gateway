@@ -100,4 +100,12 @@ def is_retryable(exc: ProviderError) -> bool:
     - ProviderUnavailableError
     """
 
-    return isinstance(exc, (ProviderTimeoutError, ProviderRateLimitError, ProviderUnavailableError, ProviderConnectionError))
+    return isinstance(
+    exc,
+    (
+        ProviderTimeoutError,
+        ProviderRateLimitError,
+        ProviderUnavailableError,
+        ProviderConnectionError,
+    ),
+)
